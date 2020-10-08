@@ -5,23 +5,47 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <sys/stat.h>
 
 #include <openssl/opensslconf.h>
 #include <openssl/ec.h>
 #include <openssl/ecdsa.h>
 #include <openssl/obj_mac.h>
+#include <openssl/pem.h>
 #include <openssl/sha.h>
 
-#define EC_CURVE NID_secp256k1
+#define EC_CURVE		NID_secp256k1
 
-#define EC_PUB_LEN 65 /* constant 04 prefix, 32-byte x, 32-byte y */
+#define EC_PUB_LEN		65 /* constant 04 prefix, 32-byte x, 32-byte y */
+
+/* Maximum signature octet string length (using 256-bit curve) */
+# define SIG_MAX_LEN    72
+
+# define PRI_FILENAME   "key.pem"
+# define PUB_FILENAME   "key_pub.pem"
+
+/**
+ * struct sig_s - EC Signature structure
+ *
+ * @sig: Signature buffer. The whole space may not be used
+ * @len: Actual signature size. Can't exceed SIG_MAX_LEN
+ */
+typedef struct sig_s
+{
+    /*
+     * @sig must stay first, so we can directly use the structure as
+     * an array of char
+     */
+	uint8_t     sig[SIG_MAX_LEN];
+	uint8_t     len;
+} sig_t;
 
 EC_KEY *ec_create(void);
 EC_KEY *ec_from_pub(uint8_t const pub[EC_PUB_LEN]);
 EC_KEY *ec_load(char const *folder);
 
 int ec_save(EC_KEY *key, char const *folder);
-int ec_verify(EC_KEY const *key, uint_8 const *msg, size_t msglen,
+int ec_verify(EC_KEY const *key, uint8_t const *msg, size_t msglen,
 	sig_t const *sig);
 uint8_t *ec_sign(EC_KEY const *key, uint8_t const *msg, size_t msglen,
 	sig_t *sig);
