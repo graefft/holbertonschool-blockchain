@@ -21,7 +21,6 @@ EC_KEY *ec_load(char const *folder)
 	if (!fp)
 		return (NULL);
 
-	/* Write Private key to PEM */
 	if (!PEM_read_ECPrivateKey(fp, &key, NULL, NULL))
 	{
 		fclose(fp);
@@ -34,7 +33,6 @@ EC_KEY *ec_load(char const *folder)
 	if (!fp)
 		return (NULL);
 
-	/* Write Public key to PEM */
 	if (!PEM_read_EC_PUBKEY(fp, &key, NULL, NULL))
 	{
 		fclose(fp);
