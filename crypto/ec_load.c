@@ -13,7 +13,7 @@ EC_KEY *ec_load(char const *folder)
 	EC_KEY *key = NULL;
 	FILE *fp;
 
-	if (!key || !folder)
+	if (!folder)
 		return (NULL);
 
 	sprintf(buffer, "%s/%s",  folder, PRI_FILENAME);
