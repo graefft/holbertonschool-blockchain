@@ -7,11 +7,11 @@ NAME = libhblk_crypto.a
 
 .PHONY: clean oclean
 
-#clean:
-#	rm *~ $(NAME)
-#
-#oclean:
-#	rm $(OBJS)
+clean:
+	rm *~ $(NAME)
+
+oclean:
+	rm $(OBJS)
 
 libhblk_crypto.a: hblk_crypto.h $(OBJS)
 	ar rcs $(NAME) $(OBJS)
