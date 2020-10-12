@@ -14,15 +14,13 @@
 #include <openssl/pem.h>
 #include <openssl/sha.h>
 
-#define EC_CURVE		NID_secp256k1
-
-#define EC_PUB_LEN		65 /* constant 04 prefix, 32-byte x, 32-byte y */
+#define EC_CURVE	NID_secp256k1
+#define EC_PUB_LEN	65 /* constant 04 prefix, 32-byte x, 32-byte y */
 
 /* Maximum signature octet string length (using 256-bit curve) */
-# define SIG_MAX_LEN    72
-
-# define PRI_FILENAME   "key.pem"
-# define PUB_FILENAME   "key_pub.pem"
+# define SIG_MAX_LEN	72
+# define PRI_FILENAME	"key.pem"
+# define PUB_FILENAME	"key_pub.pem"
 
 /**
  * struct sig_s - EC Signature structure
