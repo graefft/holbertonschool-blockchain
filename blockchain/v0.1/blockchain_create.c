@@ -53,9 +53,9 @@ blockchain_t *blockchain_create(void)
 	if (!blockchain->chain)
 	{
 		free(blockchain), free(genesis);
-		perror("Llist_create");
+		perror("Blockchain->chain");
 		return (NULL);
 	}
-	llist_add_node(blockchain->chain, (void *)genesis, ADD_NODE_REAR);
+	llist_add_node(blockchain->chain, (void *)genesis, ADD_NODE_FRONT);
 	return (blockchain);
 }
