@@ -14,7 +14,7 @@ block_t *genesis_create(void)
 {
 	block_t *genesis;
 
-	genesis = malloc(sizeof(*genesis));
+	genesis = calloc(1, sizeof(*genesis));
 	if (!genesis)
 		return (NULL);
 
@@ -56,6 +56,11 @@ blockchain_t *blockchain_create(void)
 		perror("Blockchain->chain");
 		return (NULL);
 	}
-	llist_add_node(blockchain->chain, (void *)genesis, ADD_NODE_FRONT);
+	if (llist_add_node(blockchain->chain, genesis, ADD_NODE_FRONT) == -1)
+	{
+		free(blockchain), free(genesis);
+		perror("llist_add_node");
+		return (NULL);
+	}
 	return (blockchain);
 }
