@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <llist.h>
+#include <time.h>
 #include "../../crypto/hblk_crypto.h"
 
 #define BLOCKCHAIN_DATA_MAX 1024
@@ -19,20 +20,6 @@ typedef struct blockchain_s
 {
 	llist_t     *chain;
 } blockchain_t;
-
-/**
- * struct block_s - Block structure
- *
- * @info: Block info
- * @data: Block data
- * @hash: 256-bit digest of the Block, to ensure authenticity
- */
-typedef struct block_s
-{
-	block_info_t    info; /* This must stay first */
-	block_data_t    data; /* This must stay second */
-	uint8_t     hash[SHA256_DIGEST_LENGTH];
-} block_t;
 
 /**
  * struct block_info_s - Block info structure
@@ -59,6 +46,7 @@ typedef struct block_info_s
 	uint8_t     prev_hash[SHA256_DIGEST_LENGTH];
 } block_info_t;
 
+
 /**
  * struct block_data_s - Block data
  *
@@ -74,6 +62,22 @@ typedef struct block_data_s
 	int8_t      buffer[BLOCKCHAIN_DATA_MAX];
 	uint32_t    len;
 } block_data_t;
+
+
+/**
+ * struct block_s - Block structure
+ *
+ * @info: Block info
+ * @data: Block data
+ * @hash: 256-bit digest of the Block, to ensure authenticity
+ */
+typedef struct block_s
+{
+	block_info_t    info; /* This must stay first */
+	block_data_t    data; /* This must stay second */
+	uint8_t     hash[SHA256_DIGEST_LENGTH];
+} block_t;
+
 
 block_t *block_create(block_t const *prev, int8_t const *data,
 	uint32_t data_len);
