@@ -10,6 +10,8 @@
 #include "../../crypto/hblk_crypto.h"
 
 #define BLOCKCHAIN_DATA_MAX 1024
+#define HBLK_MAGIC "HBTN"
+#define HBLK_VERSION "0.1"
 
 /**
  * struct blockchain_s - Blockchain structure
