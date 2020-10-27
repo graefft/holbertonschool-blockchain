@@ -43,23 +43,26 @@ int blockchain_serialize(blockchain_t const *blockchain, char const *path)
 	fp = fopen(path, "w");
 	if (!fp)
 		return (-1);
-	/* 0x00	4	hblk_magic	48 42 4c 4b	*/
+
+	/* 0x00	4	hblk_magic      48 42 4c 4b */
 	fwrite(HBLK_MAGIC, strlen(HBLK_MAGIC), 1, fp);
-	/* 0x04 3	hblk_version x.y		*/
+	/* 0x04 3	hblk_version    x.y         */
 	fwrite(HBLK_VERSION, strlen(HBLK_VERSION), 1, fp);
-	/* 0x07	1	hblk_endian		1 or 2	*/
+	/* 0x07	1	hblk_endian     1 or 2      */
 	endian = _get_endianness();
 	fwrite(&endian, 1, 1, fp);
-	/* 0x08	4	hblk_blocks				*/
+	/* 0x08	4	hblk_blocks                 */
 	blocks = llist_size(blockchain->chain);
 	fwrite(&blocks, sizeof(blocks), 1, fp);
-
+	/* 0x0C n	blocks                      */
 	for (i = 0; i < blocks; i++)
+	{
 		if (write_block(llist_get_node_at(blockchain->chain, i), fp) == -1)
 		{
 			fclose(fp);
 			return (-1);
 		}
+	}
 	fclose(fp);
 	return (0);
 }
