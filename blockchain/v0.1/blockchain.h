@@ -5,12 +5,18 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
 #include <llist.h>
 #include <time.h>
+#include <unistd.h>
+
+#include "provided/endianness.h"
 #include "../../crypto/hblk_crypto.h"
 
 #define BLOCKCHAIN_DATA_MAX 1024
-#define HBLK_MAGIC "HBTN"
+#define HBLK_MAGIC "HBLK"
 #define HBLK_VERSION "0.1"
 
 /**
