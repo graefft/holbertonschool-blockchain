@@ -41,6 +41,7 @@ int match_genesis(block_t const *block)
  */
 int block_is_valid(block_t const *block, block_t const *prev_block)
 {
+	uint8_t block_hash[SHA256_DIGEST_LENGTH];
 	uint8_t prev_hash[SHA256_DIGEST_LENGTH];
 
 	if (!block)
@@ -60,8 +61,12 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 			return (EXIT_FAILURE);
 		if (memcmp(block->info.prev_hash, prev_hash, SHA256_DIGEST_LENGTH) != 0)
 			return (EXIT_FAILURE);
-		if (block->data.len > BLOCKCHAIN_DATA_MAX)
-			return (EXIT_FAILURE);
 	}
+	if (!block_hash(block, block_hash))
+		return (EXIT_FAILURE);
+	if (memcmp(block->hash, block_hash, SHA256_DIGEST_LENGTH) != 0)
+		return (EXIT_FAILURE);
+	if (block->data.len > BLOCKCHAIN_DATA_MAX)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
