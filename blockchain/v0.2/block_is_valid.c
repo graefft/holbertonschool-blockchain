@@ -16,7 +16,8 @@ int match_genesis(block_t const *block)
 		return (-1);
 	if (block->info.timestamp != GENESIS_TIMESTAMP)
 		return (-1);
-
+	if (!hash_matches_difficulty(block->hash, block->info.difficulty))
+		return (-1);
 	return (0);
 }
 
